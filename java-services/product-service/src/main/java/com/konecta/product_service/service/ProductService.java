@@ -1,11 +1,14 @@
 package com.konecta.product_service.service;
 
+import com.konecta.product_service.dto.ProductCreationDto;
 import com.konecta.product_service.entity.Product;
+import com.konecta.product_service.exception.ProductNotFoundException;
 import com.konecta.product_service.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService {
@@ -15,8 +18,18 @@ public class ProductService {
         this.productRepository = pRepository;
     }
 
-    public void addProduct(Product product) {
-        productRepository.save(product);
+    public Product addProduct(ProductCreationDto dto) {
+        if(productRepository.existsByName(dto.getName())) {
+            throw new EntityExistsException("Product with name ("+ dto.getName() + ") already exists.");
+        }
+        Product p = new Product();
+        p.setName(dto.getName());
+        p.setDescription(dto.getDescription());
+        p.setPrice(dto.getPrice());
+        p.setStock(dto.getStock());
+
+        productRepository.save(p);
+        return p;
     }
 
     public List<Product> getAllProducts() {
@@ -25,6 +38,9 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with ID (" + id + ") is not found."));
+                .orElseThrow(() -> new ProductNotFoundException(
+                        "Product Not Found",
+                        Map.of("id", "id (" + id + ") is not found")
+                ));
     }
 }

@@ -1,7 +1,9 @@
 package com.konecta.product_service.controller;
 
+import com.konecta.product_service.dto.ProductCreationDto;
 import com.konecta.product_service.entity.Product;
 import com.konecta.product_service.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductCreationDto dto) {
+        Product product = productService.addProduct(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
     @GetMapping

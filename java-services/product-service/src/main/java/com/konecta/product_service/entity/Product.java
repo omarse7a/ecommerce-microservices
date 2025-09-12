@@ -27,5 +27,5 @@ public class Product {
     private double price;
 
     @Column(name = "stock", columnDefinition = "INT DEFAULT 0")
-    private int stock = 0;
+    private int stock;
 }
