@@ -11,6 +11,19 @@ services:
       - "3307:3306"
     networks:
       - ecom-net
+  postgres-auth:
+    container_name: postgres-auth
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: users_db
+    volumes:
+      - postgres_auth:/var/lib/postgresql/data
+    ports:
+      - "5430:5432"
+    networks:
+      - ecom-net
 
 networks:
   ecom-net:
