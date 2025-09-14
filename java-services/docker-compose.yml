@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: users_db
     volumes:
-      - postgres_auth:/var/lib/postgresql/data
+      - postgres-auth:/var/lib/postgresql/data
     ports:
       - "5430:5432"
     networks:
@@ -31,3 +31,4 @@ networks:
 
 volumes:
   mysql:
+  postgres-auth:
