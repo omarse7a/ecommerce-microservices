@@ -1,6 +1,6 @@
 package com.konecta.auth_service.service;
 
-import com.konecta.auth_service.configuration.JwtUtil;
+import com.konecta.auth_service.configuration.JwtService;
 import com.konecta.auth_service.dto.AuthResponse;
 import com.konecta.auth_service.dto.LoginRequest;
 import com.konecta.auth_service.dto.SignupRequest;
@@ -17,12 +17,12 @@ import java.util.Map;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final BCryptPasswordEncoder encoder;
 
-    public AuthService(UserRepository userRepository, JwtUtil jwtUtil) {
+    public AuthService(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
         this.encoder = new BCryptPasswordEncoder();
     }
 
@@ -43,7 +43,7 @@ public class AuthService {
         response.setId(user.getId());
         response.setName(user.getName());
         response.setUsername(user.getUsername());
-        response.setToken(jwtUtil.generateToken(user.getUsername()));
+        response.setToken(jwtService.generateToken(user.getUsername()));
         return response;
     }
 
@@ -59,7 +59,7 @@ public class AuthService {
         response.setId(user.getId());
         response.setName(user.getName());
         response.setUsername(user.getUsername());
-        response.setToken(jwtUtil.generateToken(user.getUsername()));
+        response.setToken(jwtService.generateToken(user.getUsername()));
         return response;
     }
 }

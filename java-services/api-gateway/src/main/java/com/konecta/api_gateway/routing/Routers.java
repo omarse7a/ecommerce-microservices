@@ -1,5 +1,6 @@
 package com.konecta.api_gateway.routing;
 
+import com.konecta.api_gateway.security.JwtGatewayFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.function.RouterFunction;
@@ -12,6 +13,11 @@ import static org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequ
 
 @Configuration
 public class Routers {
+    private final JwtGatewayFilter jwtFilter;
+
+    public Routers(JwtGatewayFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
     @Bean
     public RouterFunction<ServerResponse> authServiceRouter() {
@@ -26,6 +32,7 @@ public class Routers {
         return route("product-service")
                 .route(path("api/v1/products/**"), http())
                 .before(uri("http://localhost:8082"))
+                .filter(jwtFilter)
                 .build();
     }
 
