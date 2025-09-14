@@ -1,12 +1,12 @@
 services:
-  mysql:
-    container_name: mysql
+  mysql-product:
+    container_name: mysql-product
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: products_db
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql-product:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -25,10 +25,33 @@ services:
     networks:
       - ecom-net
 
+  postgres-order:
+    container_name: postgres-orders
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: orders_db
+    volumes:
+      - postgres-orders:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+    networks:
+      - ecom-net
+
+  redis-cart:
+    container_name: redis-cart
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - ecom-net
+
 networks:
   ecom-net:
     driver: bridge
 
 volumes:
-  mysql:
+  mysql-product:
   postgres-auth:
+  postgres-orders:
