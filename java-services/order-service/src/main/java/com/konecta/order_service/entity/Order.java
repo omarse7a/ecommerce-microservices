@@ -2,6 +2,7 @@ package com.konecta.order_service.entity;
 
 import com.konecta.order_service.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,10 +32,16 @@ public class Order {
     @Column(name = "total_amount")
     private double totalAmount;
 
+    @Setter(AccessLevel.NONE)
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "order",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<OrderItem> items = new HashSet<>();
 }

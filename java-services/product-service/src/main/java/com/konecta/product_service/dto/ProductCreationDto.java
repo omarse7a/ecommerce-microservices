@@ -1,9 +1,7 @@
 package com.konecta.product_service.dto;
 
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +13,11 @@ public class ProductCreationDto {
 
     private String description;
 
-    @DecimalMin(value = "0.0", inclusive = false, message = "must be greater than 0")
+    @NotNull
+    @Positive
     private double price;
 
-    @Min(value = 0, message = "must be a positive integer")
+    @NotNull
+    @PositiveOrZero(message = "must be a non-negative integer")
     private int stock = 0;
 }
