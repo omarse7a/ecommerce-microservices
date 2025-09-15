@@ -1,4 +1,5 @@
 using CartService.Daos;
+using Steeltoe.Discovery.Eureka;
 
 namespace CartService
 {
@@ -12,10 +13,12 @@ namespace CartService
             builder.Services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = builder.Configuration.GetConnectionString("Redis");
-                options.InstanceName = "CartService_";
+                options.InstanceName = "RedisCart_";
             });
 
             builder.Services.AddSingleton<CartDao>();
+
+            builder.Services.AddEurekaDiscoveryClient();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

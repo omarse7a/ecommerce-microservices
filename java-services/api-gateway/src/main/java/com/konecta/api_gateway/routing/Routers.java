@@ -32,6 +32,14 @@ public class Routers {
         return route("product-service")
                 .route(path("api/v1/products/**"), http())
                 .before(uri("http://localhost:8082"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> cartServiceRouter() {
+        return route("cart-service")
+                .route(path("api/v1/cart/**"), http())
+                .before(uri("http://localhost:5147"))
                 .filter(jwtFilter)
                 .build();
     }

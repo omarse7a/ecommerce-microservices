@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CartService.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/carts")]
     public class CartController : ControllerBase
     {
         private readonly CartDao _cartDao;
