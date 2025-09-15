@@ -1,3 +1,4 @@
+using CartService.Daos;
 
 namespace CartService
 {
@@ -8,6 +9,13 @@ namespace CartService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                options.InstanceName = "CartService_";
+            });
+
+            builder.Services.AddSingleton<CartDao>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
