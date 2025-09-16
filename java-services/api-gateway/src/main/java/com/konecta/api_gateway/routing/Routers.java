@@ -40,7 +40,15 @@ public class Routers {
         return route("cart-service")
                 .route(path("api/v1/cart/**"), http())
                 .before(uri("http://localhost:5147"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> orderServiceRouter() {
+        return route("order-service")
+                .route(path("api/v1/orders/**"), http())
                 .filter(jwtFilter)
+                .before(uri("http://localhost:8083"))
                 .build();
     }
 

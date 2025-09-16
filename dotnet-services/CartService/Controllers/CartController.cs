@@ -29,11 +29,12 @@ namespace CartService.Controllers
             return Ok();
         }
 
-        [HttpPatch("{userId}/ttl")]
-        public async Task<IActionResult> RefreshCartTtl(string userId, [FromQuery(Name = "ttl")] int ttlInSeconds)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> RefreshCartTtl(string userId, [FromQuery(Name = "ttl")] int ttlInDays)
         {
-            await _cartDao.RefreshTtlAsync(userId, TimeSpan.FromSeconds(ttlInSeconds));
-            return Ok($"TTL was updated to {TimeSpan.FromSeconds(ttlInSeconds).TotalDays:F1} days");
+            var ttl = TimeSpan.FromDays(ttlInDays);
+            await _cartDao.RefreshTtlAsync(userId, ttl);
+            return Ok($"TTL was updated to {ttl.TotalSeconds} seconds");
         }
 
         [HttpDelete("{userId}")]
