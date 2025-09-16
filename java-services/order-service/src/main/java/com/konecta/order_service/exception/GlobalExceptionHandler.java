@@ -13,6 +13,17 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleProductNotFound(OrderNotFoundException e, HttpServletRequest request) {
+        ErrorDto error = new ErrorDto(
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     // Handles validation errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidHandler(MethodArgumentNotValidException e, HttpServletRequest request) {
