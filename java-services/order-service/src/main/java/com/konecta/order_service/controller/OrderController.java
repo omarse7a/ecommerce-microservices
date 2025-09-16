@@ -6,10 +6,7 @@ import com.konecta.order_service.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/orders")
@@ -27,17 +24,18 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    public void getAllOrders(Long userId) {
+    @GetMapping
+    public void getAllOrders(@RequestParam Long userId) {
 
     }
 
-    // userId query param
-    public void getOrder(Long userId, Long orderId) {
+    @GetMapping("{orderId}")
+    public void getOrder(@PathVariable Long orderId, @RequestParam Long userId) {
 
     }
 
-    // status and userId query param
-    public void updateOrderStatus(Long userId, Long orderId) {
+    @PatchMapping("{orderId}")
+    public void updateOrderStatus(@PathVariable Long orderId, @RequestParam Long userId, @RequestParam String status) {
 
     }
 }

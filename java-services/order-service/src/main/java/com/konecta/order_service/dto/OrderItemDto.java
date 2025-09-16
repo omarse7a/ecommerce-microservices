@@ -2,7 +2,11 @@ package com.konecta.order_service.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class OrderItemDto {
 
     @NotNull
@@ -10,8 +14,9 @@ public class OrderItemDto {
 
     @NotNull
     @Positive
-    private double price;
+    private Double price;
 
+    @NotNull
     @Positive(message = "must be a positive integer")
-    private int quantity;
+    private Integer quantity;
 }

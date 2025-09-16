@@ -27,5 +27,6 @@ public class OrderItem {
     private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="order_id")
     private Order order;
 }
