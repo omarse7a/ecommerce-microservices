@@ -38,7 +38,7 @@ public class Routers {
     @Bean
     public RouterFunction<ServerResponse> cartServiceRouter() {
         return route("cart-service")
-                .route(path("api/v1/cart/**"), http())
+                .route(path("api/v1/carts/**"), http())
                 .before(uri("http://localhost:5147"))
                 .build();
     }
@@ -49,6 +49,15 @@ public class Routers {
                 .route(path("api/v1/orders/**"), http())
                 .filter(jwtFilter)
                 .before(uri("http://localhost:8083"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> paymentServiceRouter() {
+        return route("payment-service")
+                .route(path("api/v1/payments/**"), http())
+                .filter(jwtFilter)
+                .before(uri("http://localhost:5205"))
                 .build();
     }
 

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PaymentService.Client;
 using PaymentService.Data;
 using PaymentService.Services;
+using Steeltoe.Discovery.Eureka;
 
 namespace PaymentService
 {
@@ -22,6 +23,8 @@ namespace PaymentService
             {
                 client.BaseAddress = new Uri("http://localhost:5147");
             });
+
+            builder.Services.AddEurekaDiscoveryClient();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
