@@ -21,8 +21,15 @@ namespace PaymentService.Controllers
             {
                 return BadRequest(ModelState);
             }
-            PaymentResponse response = await _paymentService.CreatePaymentAsync(request);
-            return Ok(response);
+            try
+            {
+                PaymentResponse response = await _paymentService.CreatePaymentAsync(request);
+                return Ok(response);
+            }
+            catch (CartClearFailedException ex)
+            {
+                return StatusCode(502, ex.Message);
+            }       
         }
         [HttpGet("{paymentId}")]
         public async Task<IActionResult> GetPayment(string paymentId)

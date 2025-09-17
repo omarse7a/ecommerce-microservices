@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PaymentService.Client;
 using PaymentService.Data;
 using PaymentService.Services;
 
@@ -16,6 +17,11 @@ namespace PaymentService
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IPaymentService, PaymentServiceImpl>();
+
+            builder.Services.AddHttpClient<CartClient>(client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5147");
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
