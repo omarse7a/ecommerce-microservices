@@ -1,12 +1,12 @@
 services:
-  mysql-product:
-    container_name: mysql-product
+  mysql-products:
+    container_name: mysql-products
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: products_db
     volumes:
-      - mysql-product:/var/lib/mysql
+      - mysql-products:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -25,7 +25,7 @@ services:
     networks:
       - ecom-net
 
-  postgres-order:
+  postgres-orders:
     container_name: postgres-orders
     image: postgres:latest
     environment:
@@ -47,11 +47,25 @@ services:
     networks:
       - ecom-net
 
+  mssql-payments:
+    container_name: mssql-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password@123"
+    volumes:
+      - mssql-payments:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    networks:
+      - ecom-net
+
 networks:
   ecom-net:
     driver: bridge
 
 volumes:
-  mysql-product:
+  mysql-products:
   postgres-auth:
   postgres-orders:
+  mssql-payments:
