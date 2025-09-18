@@ -1,6 +1,7 @@
 # ecommerce-microservices
 
-A microservices-based e-commerce backend built with Spring Boot and ASP.NET Core, designed for scalability, modularity, and efficient service communication.
+This project is a **practice implementation of a microservices architecture** for an e-commerce application.  
+It demonstrates how independent services can communicate and coordinate through REST APIs, service discovery, and an API Gateway.
 
 ## Features
 - **Authentication & Authorization** with JWT.
@@ -13,7 +14,7 @@ A microservices-based e-commerce backend built with Spring Boot and ASP.NET Core
 - **API Gateway** for unified routing and token validation.
 
 
-# 🌐 API Gateway Routes
+## 🌐 API Gateway Routes
 
 | Service   | Base Path              | Target Service        |
 |-----------|------------------------|-----------------------|
@@ -23,12 +24,13 @@ A microservices-based e-commerce backend built with Spring Boot and ASP.NET Core
 | Orders    | `/api/v1/orders/**`    | `order-service:8083`  |
 | Payments  | `/api/v1/payments/**`  | `payment-service:5205`|
 
-## 🛠️ Tech Stack  
-- **Java + Spring Boot**: Auth, Products, Orders, API Gateway, Service Discovery.
-- **C# + ASP.NET Core**: Cart, Payment.
-- **Databases**: MySQL, PostgreSQL, SQL Server, Redis.
-- **API Gateway**: Spring Cloud Gateway 
-- **Service Discovery**: Eureka
+### Service Communication
+
+- **Synchronous REST calls:**
+  - **Order → Cart:** The Order service communicates with the Cart service via REST to refresh cart item TTL with 7 days.
+  - **Payment → Cart:** The Payment service communicates with the Cart service via REST to clear the cart once payment is successful.  
+
+- **Service Discovery:** All services are registered with **Eureka Discovery Service** and routed through the **API Gateway**.  
 
 
 ## 📂 Project Structure  
@@ -86,3 +88,10 @@ cd java-services/<service-name>
 cd dotnet-services/<ServiceName>
 dotnet run
 ```
+
+## 🛠️ Tech Stack  
+- **Java + Spring Boot**: Auth, Products, Orders, API Gateway, Service Discovery.
+- **C# + ASP.NET Core**: Cart, Payment.
+- **Databases**: MySQL, PostgreSQL, SQL Server, Redis.
+- **API Gateway**: Spring Cloud Gateway 
+- **Service Discovery**: Eureka
