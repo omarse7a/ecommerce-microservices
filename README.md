@@ -60,7 +60,13 @@ git clone https://github.com/omarse7a/ecommerce-microservices.git
 cd ecommerce-microservices
 ```
 
-### 2. Run Databases with Docker
+### 2. Add your private and public keys in the `.env` file.
+```bash
+PRIVATE_KEY=your_private_key_base64
+PUBLIC_KEY=your_public_key_base64
+```
+
+### 3. Run Databases with Docker
 
 Start all required databases using Docker Compose:
 - `mysql-products` → MySQL (Products service)
@@ -73,7 +79,7 @@ Start all required databases using Docker Compose:
 docker-compose up -d
 ```
 
-### 3. Start services independently
+### 4. Start services independently
 
 > ⚠️ Important: Always start the discovery service and API Gateway from `java-services/` before other services.
 
